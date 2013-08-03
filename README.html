@@ -1,0 +1,63 @@
+<!DOCTYPE html><html lang="en"><head><title>README</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="README"><meta name="groc-project-path" content="README.md"><meta name="groc-github-url" content="https://github.com/AWinterman/d3.force-link-status"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/AWinterman/d3.force-link-status/blob/master/README.md">README.md</a></div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><h1 id="d3force-link-status">d3.force-link-status</h1>
+
+<p>A very small module so you can stop thinking about certain repetetive
+operations while managing <a href="http://d3js.org/">d3js</a> force directed graphs <code>force.links()</code> array.</p>
+
+<p>For more docs, check out the docs.</p>
+
+<h1 id="example">Example</h1>
+
+<h2 id="setup">Setup</h2>
+
+<p><code>Status</code> is designed to work with d3, although it should work for anything which
+imnplements a similar API, meaning the force argument has a <code>force#links</code>
+method which returns an incidince list of the edges in the graph. In any event,
+you need a few things before we can et started:</p>
+
+<pre><code class="js">var Status = require('d3.force-link-status')
+  , d3 = require('d3')
+
+/* A few parameters */
+var loops = false // node cannot link to itself
+  , directed = false // link from A to B == link from B to A
+  , multiedge = false // at most one link between nodes A and B.
+
+var s = new Status(loops, directed, multiedge)
+
+var force = d3.layout.force()
+
+/* Supposing you've defined links and nodes somewhere. */
+force
+  .links(links_array)
+  .nodes(nodes_array)
+
+var one_link = // a link
+  , another_link = // another link
+
+/* start the layout -- this gives the nodes an index. although their positions
+ * wont update until the first tick. */
+force.start()
+</code></pre>
+
+<h1 id="checks">Checks</h1>
+
+<p>Checking for equality will respect your settings:</p>
+
+<pre><code class="js">s.is(one_link, another_link)
+</code></pre>
+
+<p>A method to easily find the index of the link in the force. Mimics the api of Array#indexOf api.</p>
+
+<pre><code class="js">s.indexOf(one_link, force)
+</code></pre>
+
+<p>There is a convenient membership check:</p>
+
+<pre><code class="js">s.has(another_link, force) // -&gt; true or false
+</code></pre>
+
+<p>And finally a method to count the number of times a link appears (useful when
+<code>multiedge == true</code>.</p>
+
+<pre><code class="js">s.count(force.links()[0], force) 
+</code></pre></div></div></div></div></body></html>
