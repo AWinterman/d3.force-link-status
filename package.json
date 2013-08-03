@@ -1,0 +1,28 @@
+{
+  "name": "d3.force-link-status",
+  "version": "0.0.1",
+  "description": "convenience functions for analysis of d3.layout.force().links() arrays.",
+  "main": "index.js",
+  "scripts": {
+    "test": "node test.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git@github.com:AWinterman/d3.force-link-status.git"
+  },
+  "keywords": [
+    "d3",
+    "force",
+    "d3.layout.force",
+    "layout",
+    "graph",
+    "directed",
+    "simple"
+  ],
+  "author": "Andrew Winterman",
+  "license": "MIT",
+  "devDependencies": {
+    "sandwich": "~0.1.1",
+    "d3": "~3.2.8"
+  }
+}
