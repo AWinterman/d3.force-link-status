@@ -64,3 +64,7 @@ And finally a method to count the number of times a link appears (useful when
 ```js
 s.count(force.links()[0], force) 
 ```
+
+# Literate source #
+Is very short and available
+[here](http://awinterman.github.io/d3.force-link-status/README.html)
