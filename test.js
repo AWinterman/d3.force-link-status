@@ -101,9 +101,10 @@ Tester.prototype.indexof = function() {
     links.push(m)
   }
 
-  var outsider = pairs.next()
+  var outsider = links.pop()
     , bad_index = []
 
+  len = links.length
   this.force.links(links)
 
   assert.equal(s.indexOf(outsider, this.force), -1, 'Link not in array has non-negative index.')
@@ -117,8 +118,10 @@ Tester.prototype.indexof = function() {
       } else {
         // make sure that the the indexOf is the reverse of the i-th element
         assert.ok(s.is(links[i], links[result]), 'any match `is` equals expected.')
-        links = links.splice(result, 1)
-        bad_index.pop(links[result])
+        // replace the current one with a place holder, and remove it from the
+        // bad_index array.
+        links.splice(result, 1, {})
+        bad_index.pop()
       }
     }
   }
@@ -132,7 +135,35 @@ Tester.prototype.indexof = function() {
 }
 
 Tester.prototype.count = function() {
+  var pairs = this.possible_pairs()
+    , len = this.len / 2
+    , s = this.s
 
+  var links = []
+  for(var i = 0; i < len; ++i) {
+    var m = make(pairs.next())
+    if(!m) break
+    links.push(m)
+  }
+
+  var outsider = pairs.next()
+    , bad_index = []
+
+  this.force.links(links)
+
+  assert.equal(s.count(outsider, this.force), 0, 'Link not in array has a count of zero.')
+
+  var wrong_count = 0
+  for (var i = 0; i < len; ++i) {
+      wrong_count += s.count(links[i], this.force) !== 1
+  }
+  assert.equal(wrong_count, 0)
+
+  links.push(outsider)
+  links.push(outsider)
+  links.push(outsider)
+
+  assert.equal(s.count(outsider, this.force), 3)
 }
 
 function reverse(link) {
@@ -161,4 +192,4 @@ function make(arr_link) {
 
 var tester = new Tester
 
-tester.go()
+tester.go(10)
