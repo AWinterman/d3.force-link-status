@@ -3,7 +3,6 @@
 A very small module so you can stop thinking about certain repetetive
 operations while managing [d3js](http://d3js.org/) force directed graphs `force.links()` array.
 
-For more docs, check out the docs.
 # Example #
 
 ## Setup ##
