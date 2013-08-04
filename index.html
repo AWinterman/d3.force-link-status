@@ -1,14 +1,9 @@
 <!DOCTYPE html><html lang="en"><head><title>index</title></head><meta http-equiv="Content-Type" content="text/html; charset=utf-8"><meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0"><meta name="groc-relative-root" content=""><meta name="groc-document-path" content="index"><meta name="groc-project-path" content="index.js"><meta name="groc-github-url" content="https://github.com/AWinterman/d3.force-link-status"><link rel="stylesheet" type="text/css" media="all" href="assets/style.css"><script type="text/javascript" src="assets/behavior.js"></script><body><div id="meta"><div class="file-path"><a href="https://github.com/AWinterman/d3.force-link-status/blob/master/index.js">index.js</a></div></div><div id="document"><div class="segment"><div class="comments"><div class="wrapper"><h1 id="status">Status</h1></div></div></div><div class="segment"><div class="code"><div class="wrapper"><span class="nx">module</span><span class="p">.</span><span class="nx">exports</span> <span class="o">=</span> <span class="nx">Status</span></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><p>Initialize the Status object with three parameters which describe the
 graph:</p></div></div></div><div class="segment"><div class="comments"><div class="wrapper"><ul>
-<li><code>loops</code>: true if a link can lead from a node to itself</li>
 <li><code>directed</code>: True if a link from node A to node B is the same a s a link
 form B to A</li>
-<li><code>multiedge</code>: True if you can have multiple links between a given pair of
-nodes.</li>
-</ul></div></div><div class="code"><div class="wrapper"><span class="kd">function</span> <span class="nx">Status</span><span class="p">(</span><span class="nx">loops</span><span class="p">,</span> <span class="nx">directed</span><span class="p">,</span> <span class="nx">multiedge</span><span class="p">)</span> <span class="p">{</span>
+</ul></div></div><div class="code"><div class="wrapper"><span class="kd">function</span> <span class="nx">Status</span><span class="p">(</span><span class="nx">directed</span><span class="p">)</span> <span class="p">{</span>
   <span class="k">this</span><span class="p">.</span><span class="nx">_directed</span> <span class="o">=</span> <span class="nx">directed</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">_allow_loops</span> <span class="o">=</span> <span class="nx">loops</span>
-  <span class="k">this</span><span class="p">.</span><span class="nx">_multiedge</span> <span class="o">=</span> <span class="nx">multiedge</span>
 <span class="p">}</span>
 
 <span class="kd">var</span> <span class="nx">cons</span> <span class="o">=</span> <span class="nx">Status</span>
