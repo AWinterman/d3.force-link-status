@@ -1,5 +1,8 @@
 # d3.force-link-status #
 
+[![Build
+Status](https://travis-ci.org/AWinterman/d3-link-register.png?branch=master)](https://travis-ci.org/AWinterman/d3-link-register)
+
 A very small module so you can stop thinking about certain repetetive
 operations while managing [d3js](http://d3js.org/) force directed graphs `force.links()` array.
 
