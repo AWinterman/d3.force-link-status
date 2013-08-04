@@ -66,4 +66,4 @@ s.count(force.links()[0], force)
 
 # Literate source #
 Is very short and available
-[here](http://awinterman.github.io/d3.force-link-status/README.html)
+[here](http://awinterman.github.io/d3.force-link-status/)
