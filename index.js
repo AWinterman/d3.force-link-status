@@ -4,15 +4,10 @@ module.exports = Status
 // Initialize the Status object with three parameters which describe the
 // graph:
 
-// * `loops`: true if a link can lead from a node to itself
 // * `directed`: True if a link from node A to node B is the same a s a link
 //   form B to A
-// * `multiedge`: True if you can have multiple links between a given pair of
-//    nodes.
-function Status(loops, directed, multiedge) {
+function Status(directed) {
   this._directed = directed
-  this._allow_loops = loops
-  this._multiedge = multiedge
 }
 
 var cons = Status

@@ -4,37 +4,26 @@ var sandwich = require('sandwich')
  , assert = require('assert')
  , d3 = require('d3')
 
-var parameters
-  , len
-
-// The three parameters (loops, directed, multiedge), take a values `true` or
-// `false`.
-parameters = new Array(3)
-parameters.forEach(function(d) {
- d.push([true, false])
-})
-len = 10
-
-var options = sandwich(parameters)
+var parameters = [true, false]
+  , len = 10
 
 // Tester is a class to manage testing. It is called on the last line of this file.
-function Tester(loops, directed, multiedge) {
-  this.multiedge = multiedge
+function Tester(directed) {
   this.directed = directed
-  this.loops = loops
 }
 
 Tester.prototype.constructor = Tester
 
 // A method which sets up the force directed graph, the status object, and then
 // runs each test.
-Tester.prototype.go = function() {
+Tester.prototype.go = function(len) {
+  this.len = len
   this.setup(len)
   this.s = new Status(this.loops, this.directed, this.multiedge)
   this.is()
   this.indexof()
-  this.has()
   this.count()
+  return true
 }
 
 Tester.prototype.setup = function(len) {
@@ -47,16 +36,19 @@ Tester.prototype.setup = function(len) {
     nodes_array[i] = ({idx: i})
   }
 
-  // now I can sandwhich the nodes array to make a pile of links.
-
-  var all_possible_links = sandwich(nodes_array, nodes_array)
+  // now I can sandwich the nodes array to make a pile of links.
 
   this.force = force.nodes(nodes_array)
-  this.possible_link_pairs = all_possible_links
+}
+
+Tester.prototype.possible_pairs = function() {
+  return sandwich(this.force.nodes(), this.force.nodes())
 }
 
 Tester.prototype.is = function() {
-  var link = make(this.possible_link_pairs.random())
+  var pairs = this.possible_pairs()
+    , link = make(pairs.random())
+
   var lcopy = {target: link.target, source: link.source}
     , rev = reverse(link)
     , s = this.s
@@ -68,7 +60,7 @@ Tester.prototype.is = function() {
 
   // This loop makes sure that no link that should not be equal to `link` is
   // equal to `link`
-  while(l = make(this.possible_link_pairs.next())) {
+  while(l = make(pairs.next())) {
     var match_equal
       , cross_equal
 
@@ -96,9 +88,52 @@ Tester.prototype.is = function() {
   }
 }
 
-Tester.prototy.indexof = function(){}
-Tester.prototy.has = function(){}
-Tester.prototy.count = function(){}
+Tester.prototype.indexof = function() {
+  // need a bunch of things  
+  var pairs = this.possible_pairs()
+    , len = this.len * 2
+    , s = this.s
+
+  var links = []
+  for(var i = 0; i < len; ++i) {
+    var m = make(pairs.next())
+    if(!m) break
+    links.push(m)
+  }
+
+  var outsider = pairs.next()
+    , bad_index = []
+
+  this.force.links(links)
+
+  assert.equal(s.indexOf(outsider, this.force), -1, 'Link not in array has non-negative index.')
+
+  for(var i = 0; i < len; ++i) {
+    var result = s.indexOf(links[i], this.force)
+    if(i != result) {
+      bad_index.push([i, s.indexOf(links[i], this.force)])
+      if (this.directed) {
+        break
+      } else {
+        // make sure that the the indexOf is the reverse of the i-th element
+        assert.ok(s.is(links[i], links[result]), 'any match `is` equals expected.')
+        links = links.splice(result, 1)
+        bad_index.pop(links[result])
+      }
+    }
+  }
+
+  var msg = [
+      'Link in array had the wrong index'
+     ,  bad_index
+    ].join('\n')
+
+  assert.strictEqual(0, bad_index.length)
+}
+
+Tester.prototype.count = function() {
+
+}
 
 function reverse(link) {
   var source = link.source
