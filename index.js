@@ -7,7 +7,7 @@ module.exports = Status
 // * `directed`: True if a link from node A to node B is the same a s a link
 //   form B to A
 function Status(directed) {
-  this._directed = directed
+  this.directed = directed
 }
 
 var cons = Status
